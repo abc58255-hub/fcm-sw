@@ -1,95 +1,93 @@
-  <!DOCTYPE html>                                                                                                                 
+    <!DOCTYPE html>                                                                                                                 
   <html lang="ko">                                                                                                                
   <head>                                                                                                                          
-  <meta charset="utf-8">                                    
-  <meta name="viewport" content="width=device-width, initial-scale=1">                                                            
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="apple-mobile-web-app-capable" content="yes">                                                                        
-  <meta name="apple-mobile-web-app-title" content="홍쌤 알림">                                                                    
+  <meta name="apple-mobile-web-app-title" content="홍쌤 알림">
   <link rel="manifest" href="manifest.json">                                                                                      
-  <title>홍쌤 알림 등록</title>                                                                                                   
+  <title>홍쌤 알림 등록</title>                             
   <style>                                                                                                                         
-  body{font-family:-apple-system,sans-serif;background:#f0f4ff;display:flex;align-items:center;justify-content:center;min-height:1
-  00vh;padding:20px;margin:0}                                                                                                     
-  .card{background:#fff;border-radius:20px;padding:32px 24px;max-width:380px;width:100%;box-shadow:0 8px 32px rgba(0,0,0,.1)}     
-  h1{font-size:22px;color:#1e3a8a;margin:0 0 8px}                                                                                 
-  p{color:#64748b;font-size:14px;line-height:1.5;margin:0 0 20px}                                                                 
-  .step{background:#f8fafc;border-radius:12px;padding:14px;margin-bottom:10px;font-size:14px;color:#374151}                       
-  input{width:100%;padding:14px;font-size:16px;border:2px solid                                                                   
-  #e2e8f0;border-radius:12px;margin-bottom:12px;box-sizing:border-box}                                                            
-  button{width:100%;padding:15px;background:#1e3a8a;color:#fff;border:none;border-radius:12px;font-size:16px;font-weight:bold;curs
+  body{font-family:-apple-system,sans-serif;background:#f0f4ff;padding:20px;margin:0;min-height:100vh}
+  .card{background:#fff;border-radius:20px;padding:28px 20px;max-width:380px;margin:40px auto;box-shadow:0 4px 20px               
+  rgba(0,0,0,.1)}                                                                                                                 
+  h2{color:#1e3a8a;margin:0 0 12px}                                                                                               
+  p{color:#64748b;font-size:14px;line-height:1.6;margin:0 0 16px}                                                                 
+  .step{background:#f8fafc;border-radius:10px;padding:12px 14px;margin-bottom:8px;font-size:14px;color:#374151}                   
+  input{width:100%;padding:13px;font-size:16px;border:2px solid                                                                   
+  #e2e8f0;border-radius:10px;margin-bottom:10px;box-sizing:border-box;outline:none}                                               
+  button{width:100%;padding:14px;background:#1e3a8a;color:#fff;border:none;border-radius:10px;font-size:16px;font-weight:bold;curs
   or:pointer}                                                                                                                     
-  #st{margin-top:12px;font-size:13px;color:#64748b;text-align:center}
-  .hidden{display:none}                                                                                                           
-  </style>                                                  
-  </head>                                                                                                                         
-  <body>                                                    
-  <div class="card">
-    <div id="guide" class="hidden">                                                                                               
-      <h1>홍쌤 교실 알림</h1>
-      <p>아이폰에서 알림을 받으려면 홈 화면에 추가해야 해요.</p>                                                                  
-      <div class="step">1. 아래쪽 공유 버튼(사각형+화살표)을 탭하세요</div>                                                       
-      <div class="step">2. "홈 화면에 추가"를 선택하세요</div>                                                                    
-      <div class="step">3. 홈 화면 아이콘으로 다시 열어주세요</div>                                                               
-    </div>                                                                                                                        
-    <div id="form" class="hidden">                                                                                                
-      <h1>홍쌤 교실 알림</h1>                                                                                                     
-      <p>학번을 입력하고 알림을 허용하면 선생님 알림을 받을 수 있어요.</p>                                                        
-      <input type="text" id="sid" placeholder="학번 입력 (예: 21001)" maxlength="10">                                             
-      <button onclick="doRegister()">알림 등록하기</button>                                                                       
-      <div id="st"></div>                                                                                                         
-    </div>                                                                                                                        
-    <div id="done" class="hidden" style="text-align:center">                                                                      
-      <div style="font-size:64px;margin-bottom:16px">&#10003;</div>
-      <h1 style="color:#16a34a">알림 등록 완료!</h1>
-      <p>이제 홍쌤 교실 알림을 받을 수 있어요.</p>                                                                                
-    </div>                                                                                                                        
-  </div>                                                                                                                          
-  <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>                                        
-  <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-messaging-compat.js"></script>                                  
+  #st{margin-top:10px;font-size:13px;color:#475569;min-height:18px}
+  </style>                                                                                                                        
+  </head>                                                   
+  <body>                                                                                                                          
+  <div class="card" id="card">                              
+    <h2>홍쌤 교실 알림</h2>
+    <p>페이지 로딩 중...</p>                                                                                                      
+  </div>
   <script>                                                                                                                        
-  var CFG = {apiKey:"AIzaSyD7292UEKSrbWmBnnDVuC9n9VXOBFQkmb4",authDomain:"send-alarm-220c3.firebaseapp.com",projectId:"send-alarm-
-  220c3",storageBucket:"send-alarm-220c3.firebasestorage.app",messagingSenderId:"235927215728",appId:"1:235927215728:web:23705e0a3
-  f6ac393e81eb5"};                                          
-  var VAPID="BLRJLeOqmEKv6R3-gV9tsKSV-EgqDosMKwUXIf9iWddMCRIp7cMcbtVMhpDJCUHGN2concQbSOJbvTNsciapJNo";                            
+  var VAPID="BLRJLeOqmEKv6R3-gV9tsKSV-EgqDosMKwUXIf9iWddMCRIp7cMcbtVMhpDJCUHGN2concQbSOJbvTNsciapJNo";
   var GAS="https://script.google.com/macros/s/AKfycbyR1whn6f90-kJEAaJg_O34uP8v-KvyEqsRky58idjoxVDS5cWj80p2ScJp6V2dnz_0hA/exec";   
+  var CFG={apiKey:"AIzaSyD7292UEKSrbWmBnnDVuC9n9VXOBFQkmb4",authDomain:"send-alarm-220c3.firebaseapp.com",projectId:"send-alarm-22
+  0c3",storageBucket:"send-alarm-220c3.firebasestorage.app",messagingSenderId:"235927215728",appId:"1:235927215728:web:23705e0a3f6
+  ac393e81eb5"};                                                                                                                  
                                                                                                                                   
-  var isIOS=/iPad|iPhone|iPod/.test(navigator.userAgent)&&!window.MSStream;                                                       
-  var isStandalone=window.navigator.standalone===true||window.matchMedia("(display-mode: standalone)").matches;                   
+  var card=document.getElementById("card");                                                                                       
+  var isIOS=/iPad|iPhone|iPod/.test(navigator.userAgent)&&!window.MSStream;
+  var isStandalone=!!window.navigator.standalone;                                                                                 
                                                                                                                                   
-  if(isIOS&&!isStandalone){                                 
-    document.getElementById("guide").className="";                                                                                
-  }else{                                                    
-    document.getElementById("form").className="";                                                                                 
-    var q=window.location.search;
-    var m=q.match(/[?&]sid=([^&]*)/);                                                                                             
-    if(m)document.getElementById("sid").value=decodeURIComponent(m[1]);                                                           
-  }
-                                                                                                                                  
-  if(!firebase.apps.length)firebase.initializeApp(CFG);     
-  var msg=firebase.messaging();                                                                                                   
-                                                            
-  function st(t){document.getElementById("st").textContent=t;}                                                                    
+  var q=window.location.search;
+  var m=q.match(/[?&]sid=([^&]*)/);                                                                                               
+  var prefill=m?decodeURIComponent(m[1]):"";                                                                                      
    
-  function doRegister(){                                                                                                          
-    var id=document.getElementById("sid").value.trim();     
-    if(!id){alert("학번을 입력해주세요");return;}
-    st("알림 권한 요청 중...");
-    Notification.requestPermission().then(function(p){                                                                            
-      if(p!=="granted"){st("알림이 거부되었습니다. 설정에서 허용해주세요.");return;}
-      st("토큰 발급 중...");                                                                                                      
-      navigator.serviceWorker.register("./firebase-messaging-sw.js").then(function(r){
-        return msg.getToken({vapidKey:VAPID,serviceWorkerRegistration:r});                                                        
-      }).then(function(token){                              
-        if(!token)throw new Error("토큰 없음");                                                                                   
-        st("저장 중...");                                                                                                         
-        return fetch(GAS+"?action=saveFcmToken&studentId="+encodeURIComponent(id)+"&token="+encodeURIComponent(token));
-      }).then(function(){                                                                                                         
-        localStorage.setItem("fcm_ios_"+id,"1");            
-        document.getElementById("form").className="hidden";                                                                       
-        document.getElementById("done").className="";       
-      }).catch(function(e){st("오류: "+e.message);});                                                                             
-    });
+  if(isIOS&&!isStandalone){                                                                                                       
+    card.innerHTML='<h2>홍쌤 교실 알림</h2><p>아이폰에서 알림을 받으려면 홈 화면에 추가해야 해요.</p>'
+      +'<div class="step">1. 아래쪽 공유 버튼 (사각형+위 화살표) 탭</div>'                                                        
+      +'<div class="step">2. "홈 화면에 추가" 선택</div>'                                                                         
+      +'<div class="step">3. 홈 화면 아이콘으로 다시 열기</div>';                                                                 
+  }else{                                                                                                                          
+    card.innerHTML='<h2>홍쌤 교실 알림</h2><p>학번을 입력하고 알림을 허용하면 선생님 알림을 받을 수 있어요.</p>'                  
+      +'<input type="text" id="sid" placeholder="학번 입력 (예: 21001)" maxlength="10" value="'+prefill+'">'                      
+      +'<button onclick="doReg()">알림 등록하기</button>'                                                                         
+      +'<div id="st"></div>';                                                                                                     
   }                                                                                                                               
-  </script>                                                 
+                                                                                                                                  
+  function doReg(){                                         
+    var sid=document.getElementById("sid").value.trim();
+    if(!sid){alert("학번을 입력해주세요");return;}
+    document.getElementById("st").textContent="Firebase 로드 중...";                                                              
+    loadScript("https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js",function(){
+      loadScript("https://www.gstatic.com/firebasejs/9.22.0/firebase-messaging-compat.js",function(){                             
+        if(!firebase.apps.length)firebase.initializeApp(CFG);                                                                     
+        var msg=firebase.messaging();                                                                                             
+        document.getElementById("st").textContent="알림 권한 요청 중...";                                                         
+        Notification.requestPermission().then(function(p){  
+          if(p!=="granted"){document.getElementById("st").textContent="알림이 거부되었습니다. 설정에서 허용해주세요.";return;}    
+          document.getElementById("st").textContent="토큰 발급 중...";                                                            
+          navigator.serviceWorker.register("./firebase-messaging-sw.js").then(function(r){                                        
+            return msg.getToken({vapidKey:VAPID,serviceWorkerRegistration:r});                                                    
+          }).then(function(token){                                                                                                
+            if(!token)throw new Error("토큰 없음");                                                                               
+            return fetch(GAS+"?action=saveFcmToken&studentId="+encodeURIComponent(sid)+"&token="+encodeURIComponent(token));      
+          }).then(function(){                                                                                                     
+            localStorage.setItem("fcm_ios_"+sid,"1");
+            card.innerHTML='<div style="text-align:center;padding:20px"><div                                                      
+  style="font-size:60px;margin-bottom:16px">&#10003;</div><h2 style="color:#16a34a">알림 등록 완료!</h2><p>이제 홍쌤 교실 알림을  
+  받을 수 있어요.</p></div>';
+          }).catch(function(e){document.getElementById("st").textContent="오류: "+e.message;});                                   
+        });                                                                                                                       
+      });
+    });                                                                                                                           
+  }                                                         
+
+  function loadScript(src,cb){
+    var s=document.createElement("script");
+    s.src=src;
+    s.onload=cb;
+    s.onerror=function(){document.getElementById("st").textContent="Firebase 로드 실패";};
+    document.head.appendChild(s);
+  }
+  </script>
   </body>
-  </html>
+  </html>   
